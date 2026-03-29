@@ -32,7 +32,7 @@ svg,img{display:block;flex-shrink:0}
 ::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:99px}
 ::-webkit-scrollbar-thumb:hover{background:var(--acc2)}
 
-/* LOADING SCREEN */
+/* ── LOADING SCREEN ── */
 #loadscreen{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.4rem;transition:opacity .5s ease}
 #loadscreen.hide{opacity:0;pointer-events:none}
 .ls-logo{font-size:2.4rem;font-weight:800;letter-spacing:-.5px;background:linear-gradient(135deg,#fff 30%,var(--acc));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -42,7 +42,7 @@ svg,img{display:block;flex-shrink:0}
 .ls-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--acc),var(--acc2));border-radius:99px;transition:width .08s linear}
 .ls-txt{font-size:.75rem;color:var(--text3);letter-spacing:.1em;text-transform:uppercase}
 
-/* NAV */
+/* ── NAV ── */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav);display:flex;align-items:center;padding:0 1.5rem;gap:1.25rem;background:rgba(7,7,14,.93);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--bd)}
 .logo{font-size:1.18rem;font-weight:800;letter-spacing:-.5px;cursor:pointer;white-space:nowrap;flex-shrink:0;background:linear-gradient(135deg,#fff 30%,var(--acc));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .logo em{-webkit-text-fill-color:var(--acc);font-style:normal}
@@ -238,6 +238,90 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav);display:fl
 .fdiv{text-align:center;font-size:.75rem;color:var(--text3);margin:.9rem 0;position:relative}
 .fdiv::before,.fdiv::after{content:'';position:absolute;top:50%;width:42%;height:1px;background:var(--bd)}
 .fdiv::before{left:0}.fdiv::after{right:0}
+
+/* ── AD BLOCK BUTTON ── */
+#adCleanBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 15px;
+  border-radius: 10px;
+  background: var(--bg3);
+  border: 1px solid var(--bd2);
+  color: var(--text2);
+  font-size: .77rem;
+  font-weight: 600;
+  font-family: var(--font);
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0,0,0,.4);
+  transition: all .2s ease;
+  letter-spacing: .01em;
+  user-select: none;
+}
+#adCleanBtn:hover {
+  border-color: var(--acc-b);
+  color: var(--acc);
+  background: var(--bg4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0,0,0,.5);
+}
+#adCleanBtn.cleaning {
+  color: var(--acc);
+  border-color: var(--acc-b);
+  background: var(--acc3);
+}
+#adCleanBtn.done {
+  color: #4ade80;
+  border-color: rgba(74,222,128,.3);
+  background: rgba(74,222,128,.08);
+}
+#adCleanBtn .adc-count {
+  display: none;
+  background: var(--acc);
+  color: #fff;
+  font-size: .6rem;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 99px;
+  line-height: 1.4;
+  min-width: 16px;
+  text-align: center;
+}
+#adCleanBtn .adc-count.show { display: inline-block; }
+
+/* ── TOAST NOTIFICATION ── */
+#adToast {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  z-index: 9997;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: var(--bg3);
+  border: 1px solid var(--bd2);
+  color: var(--text2);
+  font-size: .78rem;
+  font-weight: 500;
+  font-family: var(--font);
+  box-shadow: 0 8px 28px rgba(0,0,0,.5);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .22s ease, transform .22s ease;
+  pointer-events: none;
+  max-width: 260px;
+  line-height: 1.5;
+}
+#adToast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+#adToast strong { color: var(--text); font-weight: 600; }
+#adToast .toast-icon { display: inline-block; margin-right: 5px; }
+
 @media(max-width:640px){
   nav{padding:0 .9rem;gap:.85rem}
   .nl{display:none}
@@ -251,6 +335,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav);display:fl
   .hero h1{font-size:1.7rem}
   .tgrid{grid-template-columns:repeat(2,1fr)}
   .epcard{width:185px}
+  #adCleanBtn { bottom: 14px; right: 14px; padding: 8px 12px; }
+  #adToast { bottom: 60px; right: 14px; }
 }
 </style>
 </head>
@@ -263,6 +349,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav);display:fl
   <div class="ls-bar-wrap"><div class="ls-bar" id="lsbar"></div></div>
   <div class="ls-txt">Loading your stream…</div>
 </div>
+
+<!-- AD CLEAN BUTTON -->
+<button id="adCleanBtn" title="Remove popups and ad overlays">
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+  </svg>
+  <span id="adBtnLabel">Clean Ads</span>
+  <span class="adc-count" id="adCount"></span>
+</button>
+
+<!-- TOAST -->
+<div id="adToast"></div>
 
 <nav>
   <span class="logo" id="navlogo">Flix<em>Free</em></span>
@@ -284,7 +382,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav);display:fl
   </div>
 </nav>
 
-<!-- HOME -->
+<!-- HOME PAGE -->
 <div class="page on" id="home-page">
   <div class="hero" id="hero">
     <div class="hbg"><div class="hbgimg" id="hbi"></div><div class="hov"></div></div>
@@ -322,7 +420,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav);display:fl
   </div>
 </div>
 
-<!-- BROWSE -->
+<!-- BROWSE PAGE -->
 <div class="page" id="browse-page">
   <div class="sec">
     <div class="bhead">
@@ -338,7 +436,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav);display:fl
   </div>
 </div>
 
-<!-- SEARCH -->
+<!-- SEARCH PAGE -->
 <div class="page" id="search-page">
   <div class="swrap">
     <div class="sbar">
@@ -351,7 +449,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav);display:fl
   <div class="sec" style="padding-top:.25rem"><div class="grid" id="sg"></div></div>
 </div>
 
-<!-- PLAYER -->
+<!-- PLAYER PAGE -->
 <div class="page" id="player-page">
   <div class="pwrap">
     <button class="backbtn" id="backbtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>Back</button>
@@ -375,7 +473,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav);display:fl
   </div>
 </div>
 
-<!-- PROFILE -->
+<!-- PROFILE PAGE -->
 <div class="page" id="profile-page">
   <div class="prwrap">
     <div class="prhdr">
@@ -402,7 +500,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav);display:fl
   </div>
 </div>
 
-<!-- SETTINGS -->
+<!-- SETTINGS PAGE -->
 <div class="page" id="settings-page">
   <div class="setwrap">
     <h1 class="settitle">Settings</h1>
@@ -455,7 +553,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav);display:fl
     <div class="setg">
       <div class="setgl">About</div>
       <div class="setr">
-        <div><div class="setl">FlixFree</div><div class="setd">v3.1 · Powered by TMDB · Free forever</div></div>
+        <div><div class="setl">FlixFree</div><div class="setd">v3.2 · Powered by TMDB · Free forever</div></div>
         <span style="font-size:.72rem;color:var(--acc);font-weight:600">FREE</span>
       </div>
     </div>
@@ -495,387 +593,394 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav);display:fl
 <script>
 'use strict';
 
-// ═══════════════════════════════════════════════
-//  AD BLOCK — popup & redirect killer
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+//  UPGRADED AD BLOCKER
+//  Blocks popups at the source + gives the user a manual
+//  "Clean Ads" button that intelligently removes overlays
+//  injected by embed players — without killing the player.
+// ═══════════════════════════════════════════════════════════
+
+// 1. Lock down navigation / popup APIs immediately
 window.open = () => null;
 window.alert = () => null;
 window.confirm = () => false;
 window.prompt = () => null;
+
+// 2. Kill beforeunload redirects from embeds
 window.addEventListener('beforeunload', e => e.stopImmediatePropagation(), true);
+
+// 3. Block postMessage-based redirects from iframes
 window.addEventListener('message', e => {
   if (typeof e.data === 'string') {
-    try { const d=JSON.parse(e.data); if(d.type==='navigate'||d.action==='redirect'||d.url) e.stopImmediatePropagation(); } catch(_){}
+    try {
+      const d = JSON.parse(e.data);
+      if (d.type === 'navigate' || d.action === 'redirect' || d.url)
+        e.stopImmediatePropagation();
+    } catch(_) {}
   }
 }, true);
-new MutationObserver(muts => {
+
+// 4. Mutation observer: auto-remove new fixed/absolute overlays
+//    that appear OUTSIDE our own UI elements — runs silently in background
+const SAFE_ROOTS = ['nav','#loadscreen','#amod','#adCleanBtn','#adToast','.pbox','.modal','.overlay'];
+const isSafe = el => SAFE_ROOTS.some(s => el.closest && el.closest(s));
+let autoRemoved = 0;
+
+const adObserver = new MutationObserver(muts => {
   muts.forEach(m => m.addedNodes.forEach(node => {
     if (node.nodeType !== 1) return;
+    if (isSafe(node)) return;
     const s = window.getComputedStyle(node);
-    if ((s.position==='fixed'||s.position==='absolute') && parseInt(s.zIndex)>500
-        && !node.closest('nav,.modal,.overlay,#amod,#loadscreen,.pbox')) node.remove();
+    const zIndex = parseInt(s.zIndex) || 0;
+    const isOverlay =
+      (s.position === 'fixed' || s.position === 'absolute') &&
+      zIndex > 500 &&
+      (s.width === '100%' || parseInt(s.width) > window.innerWidth * 0.5) &&
+      !node.id?.includes('ff') && !node.id?.includes('load');
+    if (isOverlay) { node.remove(); autoRemoved++; updateAdBtn(false); }
   }));
-}).observe(document.body, {childList:true, subtree:true});
-document.addEventListener('click', e => { if(e.target.tagName==='IFRAME') e.preventDefault(); }, true);
+});
+adObserver.observe(document.body, { childList: true, subtree: true });
 
-// ═══════════════════════════════════════════════
+// 5. Block clicks on iframes from propagating (prevents accidental tab opens)
+document.addEventListener('click', e => {
+  if (e.target.tagName === 'IFRAME') e.preventDefault();
+}, true);
+
+// ── MANUAL CLEAN BUTTON ──────────────────────────────────────
+const adBtn   = document.getElementById('adCleanBtn');
+const adLabel = document.getElementById('adBtnLabel');
+const adCount = document.getElementById('adCount');
+const adToast = document.getElementById('adToast');
+let toastTimer = null;
+
+function showToast(html, duration = 3200) {
+  adToast.innerHTML = html;
+  adToast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => adToast.classList.remove('show'), duration);
+}
+
+function updateAdBtn(cleaned, count) {
+  if (count !== undefined) {
+    if (count > 0) {
+      adCount.textContent = count;
+      adCount.classList.add('show');
+    } else {
+      adCount.classList.remove('show');
+    }
+  }
+  if (cleaned === true) {
+    adBtn.classList.remove('cleaning');
+    adBtn.classList.add('done');
+    adLabel.textContent = 'Cleaned';
+    setTimeout(() => {
+      adBtn.classList.remove('done');
+      adLabel.textContent = 'Clean Ads';
+      adCount.classList.remove('show');
+    }, 3000);
+  }
+}
+
+// Patterns that identify ad/popup elements but NOT our player iframe or UI
+const AD_SELECTORS = [
+  // overlay-style ads
+  'div[style*="z-index: 9999"]:not(#loadscreen):not(#adCleanBtn):not(#adToast)',
+  'div[style*="z-index:9999"]:not(#loadscreen):not(#adCleanBtn):not(#adToast)',
+  'div[style*="z-index: 99999"]:not(#loadscreen):not(#adCleanBtn):not(#adToast)',
+  'div[style*="z-index:99999"]:not(#loadscreen):not(#adCleanBtn):not(#adToast)',
+  // common ad class patterns (but NOT our own classes)
+  '[class*="popup"]:not(.modal):not(.overlay)',
+  '[class*="interstitial"]',
+  '[class*="ad-wrap"]',
+  '[class*="advert"]',
+  '[id*="popup"]:not(#amod)',
+  '[id*="overlay"]:not(#amod)',
+  '[id*="banner-ad"]',
+  '[id*="ad-frame"]',
+  // new blank iframes injected beside the player
+  'body > iframe:not(.pslot iframe)',
+  'body > div > iframe:not(.pslot iframe)',
+].join(',');
+
+function cleanAds() {
+  adBtn.classList.add('cleaning');
+  adLabel.textContent = 'Cleaning…';
+
+  let removed = 0;
+
+  // Pass 1: selector-based removal
+  try {
+    document.querySelectorAll(AD_SELECTORS).forEach(el => {
+      if (!isSafe(el)) { el.remove(); removed++; }
+    });
+  } catch(_) {}
+
+  // Pass 2: scan for injected fixed/absolute overlays with high z-index
+  document.querySelectorAll('body *').forEach(el => {
+    if (isSafe(el)) return;
+    const s = window.getComputedStyle(el);
+    const z = parseInt(s.zIndex) || 0;
+    if (
+      (s.position === 'fixed' || s.position === 'absolute') &&
+      z > 400 &&
+      el.tagName !== 'NAV' &&
+      el.id !== 'loadscreen' &&
+      el.id !== 'adCleanBtn' &&
+      el.id !== 'adToast' &&
+      !el.closest('.pbox') &&
+      !el.closest('.overlay') &&
+      !el.closest('nav')
+    ) { el.remove(); removed++; }
+  });
+
+  // Pass 3: remove rogue blank iframes outside the player box
+  document.querySelectorAll('iframe').forEach(f => {
+    if (!f.closest('.pslot') && !f.closest('.pbox')) { f.remove(); removed++; }
+  });
+
+  const total = removed + autoRemoved;
+
+  setTimeout(() => {
+    updateAdBtn(true, 0);
+    if (total > 0) {
+      showToast(`<strong>${total} ad element${total!==1?'s':''} removed.</strong> Player is clean.`);
+    } else {
+      showToast(`<strong>All clear.</strong> No ads detected right now.`);
+    }
+    autoRemoved = 0;
+  }, 420);
+}
+
+adBtn.addEventListener('click', cleanAds);
+
+// Periodically check for & count injected ad elements (badge indicator)
+setInterval(() => {
+  let count = 0;
+  try {
+    document.querySelectorAll(AD_SELECTORS).forEach(el => {
+      if (!isSafe(el)) count++;
+    });
+  } catch(_) {}
+  if (count > 0) {
+    adCount.textContent = count;
+    adCount.classList.add('show');
+  } else {
+    adCount.classList.remove('show');
+  }
+}, 2000);
+
+// ═══════════════════════════════════════════════════════════
 //  COUNTING LOADING SCREEN
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 (function(){
-  const bar = document.getElementById('lsbar');
-  const count = document.getElementById('lscount');
-  const screen = document.getElementById('loadscreen');
-  let p = 0;
-  const tick = () => {
-    p += Math.random() * 7 + 3;
-    if (p >= 100) {
-      p = 100;
-      bar.style.width = '100%';
-      count.textContent = '100%';
-      setTimeout(() => {
-        screen.classList.add('hide');
-        setTimeout(() => screen.remove(), 500);
-      }, 250);
+  const bar=document.getElementById('lsbar');
+  const count=document.getElementById('lscount');
+  const screen=document.getElementById('loadscreen');
+  let p=0;
+  const tick=()=>{
+    p+=Math.random()*7+3;
+    if(p>=100){
+      p=100; bar.style.width='100%'; count.textContent='100%';
+      setTimeout(()=>{screen.classList.add('hide');setTimeout(()=>screen.remove(),500);},250);
       return;
     }
-    bar.style.width = p + '%';
-    count.textContent = Math.floor(p) + '%';
-    setTimeout(tick, 60 + Math.random() * 60);
+    bar.style.width=p+'%'; count.textContent=Math.floor(p)+'%';
+    setTimeout(tick,60+Math.random()*60);
   };
   tick();
 })();
 
-// ═══════════════════════════════════════════════
-//  CORE
-// ═══════════════════════════════════════════════
-const KEY='4ef0d7355d9ffb5151e987764708ce96', API='https://api.themoviedb.org/3';
-const IW='https://image.tmdb.org/t/p/w300', IB='https://image.tmdb.org/t/p/w780', IE='https://image.tmdb.org/t/p/w500';
-const LS = {
-  g: k => { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
-  s: (k,v) => localStorage.setItem(k, JSON.stringify(v)),
-  d: k => localStorage.removeItem(k)
-};
+// ═══════════════════════════════════════════════════════════
+//  CORE APP
+// ═══════════════════════════════════════════════════════════
+const KEY='4ef0d7355d9ffb5151e987764708ce96',API='https://api.themoviedb.org/3';
+const IW='https://image.tmdb.org/t/p/w300',IB='https://image.tmdb.org/t/p/w780',IE='https://image.tmdb.org/t/p/w500';
+const LS={g:k=>{try{return JSON.parse(localStorage.getItem(k))}catch{return null}},s:(k,v)=>localStorage.setItem(k,JSON.stringify(v)),d:k=>localStorage.removeItem(k)};
 
-// THEME
-function setTheme(t) {
-  document.documentElement.dataset.theme = t;
-  LS.s('ff_theme', t);
-  document.querySelectorAll('.tsw').forEach(s => s.classList.toggle('on', (s.dataset.t||'') === t));
-}
-(()=>{
-  const t = LS.g('ff_theme') || '';
-  document.documentElement.dataset.theme = t;
-  document.querySelectorAll('.tsw').forEach(s => s.classList.toggle('on', (s.dataset.t||'') === t));
-})();
-document.querySelectorAll('.tsw').forEach(sw => sw.addEventListener('click', () => setTheme(sw.dataset.t||'')));
+function setTheme(t){document.documentElement.dataset.theme=t;LS.s('ff_theme',t);document.querySelectorAll('.tsw').forEach(s=>s.classList.toggle('on',(s.dataset.t||'')===t));}
+(()=>{const t=LS.g('ff_theme')||'';document.documentElement.dataset.theme=t;document.querySelectorAll('.tsw').forEach(s=>s.classList.toggle('on',(s.dataset.t||'')===t));})();
+document.querySelectorAll('.tsw').forEach(sw=>sw.addEventListener('click',()=>setTheme(sw.dataset.t||'')));
 
-// AUTH
-let CU = LS.g('ff_user');
-const gUsers = () => LS.g('ff_users') || [];
-const sUsers = u => LS.s('ff_users', u);
+let CU=LS.g('ff_user');
+const gUsers=()=>LS.g('ff_users')||[];
+const sUsers=u=>LS.s('ff_users',u);
 
-function dologin() {
-  const e=document.getElementById('le').value.trim(), p=document.getElementById('lp').value;
-  const err=document.getElementById('lerr'); err.textContent='';
-  if (!e||!p) { err.textContent='Please fill in all fields.'; return; }
-  const u = gUsers().find(u => u.email===e && u.password===btoa(p));
-  if (!u) { err.textContent='Incorrect email or password.'; return; }
-  CU=u; LS.s('ff_user',u); closeM(); afterAuth();
-}
-function doreg() {
-  const n=document.getElementById('rn').value.trim(), e=document.getElementById('re').value.trim(), p=document.getElementById('rp').value;
-  const err=document.getElementById('rerr'); err.textContent='';
-  if (!n||!e||!p) { err.textContent='Please fill in all fields.'; return; }
-  if (p.length<6) { err.textContent='Password must be at least 6 characters.'; return; }
-  const us=gUsers();
-  if (us.find(u=>u.email===e)) { err.textContent='Account already exists.'; return; }
-  const u={id:Date.now(),name:n,email:e,password:btoa(p)};
-  us.push(u); sUsers(us); CU=u; LS.s('ff_user',u); closeM(); afterAuth();
-}
-function logout() { CU=null; LS.d('ff_user'); rnav(); rsetacct(); rprofile(); go('home'); }
-function afterAuth() { rnav(); rsetacct(); rprofile(); rcont(); }
+function dologin(){const e=document.getElementById('le').value.trim(),p=document.getElementById('lp').value,err=document.getElementById('lerr');err.textContent='';if(!e||!p){err.textContent='Please fill in all fields.';return;}const u=gUsers().find(u=>u.email===e&&u.password===btoa(p));if(!u){err.textContent='Incorrect email or password.';return;}CU=u;LS.s('ff_user',u);closeM();afterAuth();}
+function doreg(){const n=document.getElementById('rn').value.trim(),e=document.getElementById('re').value.trim(),p=document.getElementById('rp').value,err=document.getElementById('rerr');err.textContent='';if(!n||!e||!p){err.textContent='Please fill in all fields.';return;}if(p.length<6){err.textContent='Password must be at least 6 characters.';return;}const us=gUsers();if(us.find(u=>u.email===e)){err.textContent='Account already exists.';return;}const u={id:Date.now(),name:n,email:e,password:btoa(p)};us.push(u);sUsers(us);CU=u;LS.s('ff_user',u);closeM();afterAuth();}
+function logout(){CU=null;LS.d('ff_user');rnav();rsetacct();rprofile();go('home');}
+function afterAuth(){rnav();rsetacct();rprofile();rcont();}
 
-// SETTINGS
-const gS = (k,d) => { const s=LS.g('ff_settings')||{}; return s[k]!==undefined?s[k]:d; };
-const saveS = (k,v) => { const s=LS.g('ff_settings')||{}; s[k]=v; LS.s('ff_settings',s); };
-function lsettings() {
-  document.getElementById('setsrv').value = gS('server','0');
-  document.getElementById('setap').checked = gS('autoplay',true);
-  document.getElementById('seth').checked = gS('history',true);
-  const t=LS.g('ff_theme')||'';
-  document.querySelectorAll('.tsw').forEach(s=>s.classList.toggle('on',(s.dataset.t||'')===t));
-}
-document.getElementById('setsrv').addEventListener('change', function(){ saveS('server',this.value); });
-document.getElementById('setap').addEventListener('change', function(){ saveS('autoplay',this.checked); });
-document.getElementById('seth').addEventListener('change', function(){ saveS('history',this.checked); });
+const gS=(k,d)=>{const s=LS.g('ff_settings')||{};return s[k]!==undefined?s[k]:d;};
+const saveS=(k,v)=>{const s=LS.g('ff_settings')||{};s[k]=v;LS.s('ff_settings',s);};
+function lsettings(){document.getElementById('setsrv').value=gS('server','0');document.getElementById('setap').checked=gS('autoplay',true);document.getElementById('seth').checked=gS('history',true);const t=LS.g('ff_theme')||'';document.querySelectorAll('.tsw').forEach(s=>s.classList.toggle('on',(s.dataset.t||'')===t));}
+document.getElementById('setsrv').addEventListener('change',function(){saveS('server',this.value);});
+document.getElementById('setap').addEventListener('change',function(){saveS('autoplay',this.checked);});
+document.getElementById('seth').addEventListener('change',function(){saveS('history',this.checked);});
 
-// HISTORY
-const hk = () => CU ? `ff_hist_${CU.id}` : 'ff_hist_guest';
-const gH = () => LS.g(hk()) || [];
-const sH = h => LS.s(hk(), h);
-function addH(item,type) {
-  if (!gS('history',true)) return;
-  const h=gH().filter(x=>!(x.id===item.id&&x.type===type));
-  h.unshift({id:item.id,type,title:item.title||item.name,poster:item.poster_path,date:Date.now()});
-  sH(h.slice(0,100));
-}
-function rmH(id,type) { sH(gH().filter(x=>!(x.id===id&&x.type===type))); rprofile(); rcont(); }
-function clrhist() { LS.d(hk()); rprofile(); rcont(); }
+const hk=()=>CU?`ff_hist_${CU.id}`:'ff_hist_guest';
+const gH=()=>LS.g(hk())||[];
+const sH=h=>LS.s(hk(),h);
+function addH(item,type){if(!gS('history',true))return;const h=gH().filter(x=>!(x.id===item.id&&x.type===type));h.unshift({id:item.id,type,title:item.title||item.name,poster:item.poster_path,date:Date.now()});sH(h.slice(0,100));}
+function rmH(id,type){sH(gH().filter(x=>!(x.id===id&&x.type===type)));rprofile();rcont();}
+function clrhist(){LS.d(hk());rprofile();rcont();}
 
-// API
-const cache = new Map();
-async function api(url) {
-  if (cache.has(url)) return cache.get(url);
-  try { const r=await fetch(url); if(!r.ok) return {}; const j=await r.json(); cache.set(url,j); return j; } catch { return {}; }
-}
+const cache=new Map();
+async function api(url){if(cache.has(url))return cache.get(url);try{const r=await fetch(url);if(!r.ok)return{};const j=await r.json();cache.set(url,j);return j;}catch{return{};}}
 
-// LAZY IMG
-const iobs = new IntersectionObserver(ents => {
-  ents.forEach(e => {
-    if (!e.isIntersecting) return;
-    const w=e.target; iobs.unobserve(w);
-    const img=w.querySelector('.poster'); if(!img) return;
-    img.src=w.dataset.src;
-    img.onload=()=>{ img.classList.add('vis'); w.classList.add('ok'); };
-    img.onerror=()=>w.classList.add('ok');
-  });
-},{rootMargin:'240px'});
+const iobs=new IntersectionObserver(ents=>{ents.forEach(e=>{if(!e.isIntersecting)return;const w=e.target;iobs.unobserve(w);const img=w.querySelector('.poster');if(!img)return;img.src=w.dataset.src;img.onload=()=>{img.classList.add('vis');w.classList.add('ok');};img.onerror=()=>w.classList.add('ok');});},{rootMargin:'240px'});
 
-// EMBED URLS
-function eurl(item,type,srv,s,ep) {
-  const id=item.id;
-  if (type==='movie') {
-    if(srv===0) return `https://vidsrc.to/embed/movie/${id}`;
-    if(srv===1) return `https://vidsrc.me/embed/movie?tmdb=${id}`;
-    if(srv===2) return `https://embed.su/embed/movie/${id}`;
-    return `https://www.2embed.cc/embed/${id}`;
-  }
-  if(srv===0) return `https://vidsrc.to/embed/tv/${id}/${s}/${ep}`;
-  if(srv===1) return `https://vidsrc.me/embed/tv?tmdb=${id}&season=${s}&episode=${ep}`;
-  if(srv===2) return `https://embed.su/embed/tv/${id}/${s}/${ep}`;
-  return `https://www.2embed.cc/embedtv/${id}&s=${s}&e=${ep}`;
-}
+function eurl(item,type,srv,s,ep){const id=item.id;if(type==='movie'){if(srv===0)return`https://vidsrc.to/embed/movie/${id}`;if(srv===1)return`https://vidsrc.me/embed/movie?tmdb=${id}`;if(srv===2)return`https://embed.su/embed/movie/${id}`;return`https://www.2embed.cc/embed/${id}`;}if(srv===0)return`https://vidsrc.to/embed/tv/${id}/${s}/${ep}`;if(srv===1)return`https://vidsrc.me/embed/tv?tmdb=${id}&season=${s}&episode=${ep}`;if(srv===2)return`https://embed.su/embed/tv/${id}/${s}/${ep}`;return`https://www.2embed.cc/embedtv/${id}&s=${s}&e=${ep}`;}
 
-// STATE
-let cType='movie', cPage=1, cGenre='', prevP='home';
-let cItem=null, cMT='movie', cS=1, cEp=1, cSrv=0, stmr=null, hldd=false;
-const GENRES = {
-  movie:[{id:'',n:'All'},{id:28,n:'Action'},{id:12,n:'Adventure'},{id:16,n:'Animation'},{id:35,n:'Comedy'},{id:80,n:'Crime'},{id:18,n:'Drama'},{id:27,n:'Horror'},{id:9648,n:'Mystery'},{id:10749,n:'Romance'},{id:878,n:'Sci-Fi'},{id:53,n:'Thriller'}],
-  tv:[{id:'',n:'All'},{id:10759,n:'Action'},{id:16,n:'Animation'},{id:35,n:'Comedy'},{id:80,n:'Crime'},{id:18,n:'Drama'},{id:10765,n:'Sci-Fi'},{id:9648,n:'Mystery'},{id:10768,n:'War'},{id:10762,n:'Kids'}]
-};
+let cType='movie',cPage=1,cGenre='',prevP='home';
+let cItem=null,cMT='movie',cS=1,cEp=1,cSrv=0,stmr=null,hldd=false;
+const GENRES={movie:[{id:'',n:'All'},{id:28,n:'Action'},{id:12,n:'Adventure'},{id:16,n:'Animation'},{id:35,n:'Comedy'},{id:80,n:'Crime'},{id:18,n:'Drama'},{id:27,n:'Horror'},{id:9648,n:'Mystery'},{id:10749,n:'Romance'},{id:878,n:'Sci-Fi'},{id:53,n:'Thriller'}],tv:[{id:'',n:'All'},{id:10759,n:'Action'},{id:16,n:'Animation'},{id:35,n:'Comedy'},{id:80,n:'Crime'},{id:18,n:'Drama'},{id:10765,n:'Sci-Fi'},{id:9648,n:'Mystery'},{id:10768,n:'War'},{id:10762,n:'Kids'}]};
 
-// ROUTER
-function go(name, type) {
-  const was = document.querySelector('.page.on')?.id.replace('-page','');
-  if (was==='player' && name!=='player') dplayer();
+function go(name,type){
+  const was=document.querySelector('.page.on')?.id.replace('-page','');
+  if(was==='player'&&name!=='player')dplayer();
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
   document.getElementById(name+'-page').classList.add('on');
   window.scrollTo(0,0);
   document.querySelectorAll('.nl a').forEach(a=>a.classList.remove('on'));
-  const navMap = {home:'nla', search:'nld'};
-  if (name==='browse' && type==='tv') document.getElementById('nlc').classList.add('on');
-  else if (name==='browse') document.getElementById('nlb').classList.add('on');
-  else if (navMap[name]) document.getElementById(navMap[name]).classList.add('on');
-  if (name==='home') { if(!hldd) lhome(); }
-  if (name==='browse') { prevP=was||'home'; if(type) cType=type; lbrowse(); }
-  if (name==='search') { prevP=was||'home'; setTimeout(()=>document.getElementById('si').focus(),80); }
-  if (name==='player') prevP=was||'home';
-  if (name==='profile') rprofile();
-  if (name==='settings') { lsettings(); rsetacct(); }
+  const navMap={home:'nla',search:'nld'};
+  if(name==='browse'&&type==='tv')document.getElementById('nlc').classList.add('on');
+  else if(name==='browse')document.getElementById('nlb').classList.add('on');
+  else if(navMap[name])document.getElementById(navMap[name]).classList.add('on');
+  if(name==='home'){if(!hldd)lhome();}
+  if(name==='browse'){prevP=was||'home';if(type)cType=type;lbrowse();}
+  if(name==='search'){prevP=was||'home';setTimeout(()=>document.getElementById('si').focus(),80);}
+  if(name==='player')prevP=was||'home';
+  if(name==='profile')rprofile();
+  if(name==='settings'){lsettings();rsetacct();}
 }
-function goback() { go(prevP); }
+function goback(){go(prevP);}
 
-// WIRE UP ALL BUTTONS (no onclick attributes — all addEventListener)
-document.getElementById('navlogo').addEventListener('click', ()=>go('home'));
-document.getElementById('nla').addEventListener('click', ()=>go('home'));
-document.getElementById('nlb').addEventListener('click', ()=>go('browse','movie'));
-document.getElementById('nlc').addEventListener('click', ()=>go('browse','tv'));
-document.getElementById('nld').addEventListener('click', ()=>go('search'));
-document.getElementById('nbset').addEventListener('click', ()=>go('settings'));
-document.getElementById('backbtn').addEventListener('click', goback);
-document.getElementById('hbrowsemov').addEventListener('click', ()=>go('browse','movie'));
-document.getElementById('hbrowsetv').addEventListener('click', ()=>go('browse','tv'));
-document.getElementById('hbsearch').addEventListener('click', ()=>go('search'));
-document.getElementById('seeallmov').addEventListener('click', ()=>go('browse','movie'));
-document.getElementById('seealltv').addEventListener('click', ()=>go('browse','tv'));
-document.getElementById('lmb').addEventListener('click', ()=>{ cPage++; fbrowse(false); });
-document.getElementById('ttm').addEventListener('click', ()=>{ cType='movie'; lbrowse(); });
-document.getElementById('ttt').addEventListener('click', ()=>{ cType='tv'; lbrowse(); });
-document.getElementById('prsignin').addEventListener('click', ()=>openM('login'));
-document.getElementById('prsignout').addEventListener('click', logout);
-document.getElementById('clrbtn').addEventListener('click', clrhist);
-document.getElementById('setSignin').addEventListener('click', ()=>openM('login'));
-document.getElementById('setClrHist').addEventListener('click', clrhist);
-[0,1,2,3].forEach(i => {
-  document.getElementById('sb'+i).addEventListener('click', ()=>{
-    cSrv=i;
-    [0,1,2,3].forEach(j=>document.getElementById('sb'+j).className='srbtn'+(j===i?' on':''));
-    lsrc();
-  });
-});
-document.getElementById('nsi').addEventListener('keydown', e=>{
-  if(e.key==='Enter'){ const v=e.target.value.trim(); if(!v) return; go('search'); document.getElementById('si').value=v; dosearch(v); }
-});
-document.getElementById('si').addEventListener('input', e=>dsearch(e.target.value));
-document.getElementById('si').addEventListener('keydown', e=>{ if(e.key==='Enter') dosearch(e.target.value); });
-document.getElementById('srchbtn').addEventListener('click', ()=>dosearch(document.getElementById('si').value));
-document.getElementById('amod').addEventListener('click', e=>{ if(e.target===document.getElementById('amod')) closeM(); });
-document.getElementById('mcloseBtn').addEventListener('click', closeM);
-document.getElementById('mta').addEventListener('click', ()=>switchT('login'));
-document.getElementById('mtb').addEventListener('click', ()=>switchT('reg'));
-document.getElementById('dologinBtn').addEventListener('click', dologin);
-document.getElementById('doregBtn').addEventListener('click', doreg);
-document.getElementById('guestBtn').addEventListener('click', closeM);
-document.getElementById('guestBtn2').addEventListener('click', closeM);
-document.getElementById('lp').addEventListener('keydown', e=>{ if(e.key==='Enter') dologin(); });
-document.getElementById('rp').addEventListener('keydown', e=>{ if(e.key==='Enter') doreg(); });
+document.getElementById('navlogo').addEventListener('click',()=>go('home'));
+document.getElementById('nla').addEventListener('click',()=>go('home'));
+document.getElementById('nlb').addEventListener('click',()=>go('browse','movie'));
+document.getElementById('nlc').addEventListener('click',()=>go('browse','tv'));
+document.getElementById('nld').addEventListener('click',()=>go('search'));
+document.getElementById('nbset').addEventListener('click',()=>go('settings'));
+document.getElementById('backbtn').addEventListener('click',goback);
+document.getElementById('hbrowsemov').addEventListener('click',()=>go('browse','movie'));
+document.getElementById('hbrowsetv').addEventListener('click',()=>go('browse','tv'));
+document.getElementById('hbsearch').addEventListener('click',()=>go('search'));
+document.getElementById('seeallmov').addEventListener('click',()=>go('browse','movie'));
+document.getElementById('seealltv').addEventListener('click',()=>go('browse','tv'));
+document.getElementById('lmb').addEventListener('click',()=>{cPage++;fbrowse(false);});
+document.getElementById('ttm').addEventListener('click',()=>{cType='movie';lbrowse();});
+document.getElementById('ttt').addEventListener('click',()=>{cType='tv';lbrowse();});
+document.getElementById('prsignin').addEventListener('click',()=>openM('login'));
+document.getElementById('prsignout').addEventListener('click',logout);
+document.getElementById('clrbtn').addEventListener('click',clrhist);
+document.getElementById('setSignin').addEventListener('click',()=>openM('login'));
+document.getElementById('setClrHist').addEventListener('click',clrhist);
+[0,1,2,3].forEach(i=>{document.getElementById('sb'+i).addEventListener('click',()=>{cSrv=i;[0,1,2,3].forEach(j=>document.getElementById('sb'+j).className='srbtn'+(j===i?' on':''));lsrc();});});
+document.getElementById('nsi').addEventListener('keydown',e=>{if(e.key==='Enter'){const v=e.target.value.trim();if(!v)return;go('search');document.getElementById('si').value=v;dosearch(v);}});
+document.getElementById('si').addEventListener('input',e=>dsearch(e.target.value));
+document.getElementById('si').addEventListener('keydown',e=>{if(e.key==='Enter')dosearch(e.target.value);});
+document.getElementById('srchbtn').addEventListener('click',()=>dosearch(document.getElementById('si').value));
+document.getElementById('amod').addEventListener('click',e=>{if(e.target===document.getElementById('amod'))closeM();});
+document.getElementById('mcloseBtn').addEventListener('click',closeM);
+document.getElementById('mta').addEventListener('click',()=>switchT('login'));
+document.getElementById('mtb').addEventListener('click',()=>switchT('reg'));
+document.getElementById('dologinBtn').addEventListener('click',dologin);
+document.getElementById('doregBtn').addEventListener('click',doreg);
+document.getElementById('guestBtn').addEventListener('click',closeM);
+document.getElementById('guestBtn2').addEventListener('click',closeM);
+document.getElementById('lp').addEventListener('keydown',e=>{if(e.key==='Enter')dologin();});
+document.getElementById('rp').addEventListener('keydown',e=>{if(e.key==='Enter')doreg();});
 
-// NAV USER
-function rnav() {
+function rnav(){
   const a=document.getElementById('navu');
-  if (CU) {
-    const i=CU.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
-    a.innerHTML=`<div class="nava" title="${CU.name}">${i}</div>`;
-    a.querySelector('.nava').addEventListener('click',()=>go('profile'));
-  } else {
-    a.innerHTML=`<button class="btn btn-p btn-sm">Sign in</button>`;
-    a.querySelector('button').addEventListener('click',()=>openM('login'));
-  }
+  if(CU){const i=CU.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();a.innerHTML=`<div class="nava" title="${CU.name}">${i}</div>`;a.querySelector('.nava').addEventListener('click',()=>go('profile'));}
+  else{a.innerHTML=`<button class="btn btn-p btn-sm">Sign in</button>`;a.querySelector('button').addEventListener('click',()=>openM('login'));}
 }
-function rsetacct() {
-  const r=document.getElementById('setacct'); if(!r) return;
-  if (CU) {
-    r.innerHTML=`<div><div class="setl">${CU.name}</div><div class="setd">${CU.email}</div></div><button class="btn btn-g btn-sm">Sign out</button>`;
-    r.querySelector('button').addEventListener('click', logout);
-  } else {
-    r.innerHTML=`<div><div class="setl">Not signed in</div><div class="setd">Sign in to sync history</div></div><button class="btn btn-p btn-sm">Sign in</button>`;
-    r.querySelector('button').addEventListener('click',()=>openM('login'));
-  }
+function rsetacct(){
+  const r=document.getElementById('setacct');if(!r)return;
+  if(CU){r.innerHTML=`<div><div class="setl">${CU.name}</div><div class="setd">${CU.email}</div></div><button class="btn btn-g btn-sm">Sign out</button>`;r.querySelector('button').addEventListener('click',logout);}
+  else{r.innerHTML=`<div><div class="setl">Not signed in</div><div class="setd">Sign in to sync history</div></div><button class="btn btn-p btn-sm">Sign in</button>`;r.querySelector('button').addEventListener('click',()=>openM('login'));}
 }
 
-// PROFILE
-function rprofile() {
-  const h=gH(), mv=h.filter(x=>x.type==='movie').length, tv=h.filter(x=>x.type==='tv').length;
+function rprofile(){
+  const h=gH(),mv=h.filter(x=>x.type==='movie').length,tv=h.filter(x=>x.type==='tv').length;
   document.getElementById('sttot').textContent=h.length;
   document.getElementById('stmov').textContent=mv;
   document.getElementById('sttv').textContent=tv;
-  const cb=document.getElementById('clrbtn'); if(cb) cb.style.display=h.length?'inline-flex':'none';
-  if (CU) {
-    const i=CU.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
-    document.getElementById('pavbig').textContent=i;
-    document.getElementById('pname').textContent=CU.name;
-    document.getElementById('pemail').textContent=CU.email;
-    document.getElementById('prsignin').style.display='none';
-    document.getElementById('prsignout').style.display='';
-  } else {
-    document.getElementById('pavbig').textContent='?';
-    document.getElementById('pname').textContent='Guest';
-    document.getElementById('pemail').textContent='Not signed in';
-    document.getElementById('prsignin').style.display='';
-    document.getElementById('prsignout').style.display='none';
-  }
+  const cb=document.getElementById('clrbtn');if(cb)cb.style.display=h.length?'inline-flex':'none';
+  if(CU){const i=CU.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();document.getElementById('pavbig').textContent=i;document.getElementById('pname').textContent=CU.name;document.getElementById('pemail').textContent=CU.email;document.getElementById('prsignin').style.display='none';document.getElementById('prsignout').style.display='';}
+  else{document.getElementById('pavbig').textContent='?';document.getElementById('pname').textContent='Guest';document.getElementById('pemail').textContent='Not signed in';document.getElementById('prsignin').style.display='';document.getElementById('prsignout').style.display='none';}
   const list=document.getElementById('hlist');
-  if (!h.length) {
-    list.innerHTML=`<div class="empty"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg><p>No watch history yet.<br>Start watching something!</p></div>`;
-    return;
-  }
+  if(!h.length){list.innerHTML=`<div class="empty"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg><p>No watch history yet.<br>Start watching something!</p></div>`;return;}
   list.innerHTML='';
   h.forEach(item=>{
-    const el=document.createElement('div'); el.className='hitem';
+    const el=document.createElement('div');el.className='hitem';
     const th=item.poster?`<img class="hthumb" src="${IW}${item.poster}" alt="" loading="lazy">`:`<div class="hthph"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect width="18" height="18" x="3" y="3" rx="2"/></svg></div>`;
     el.innerHTML=`${th}<div class="hinfo"><div class="htitle">${item.title}</div><div class="hsub">${item.type==='tv'?'TV Series':'Movie'} · ${ago(item.date)}</div></div><button class="hrm"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></button>`;
-    el.querySelector('.hrm').addEventListener('click', ev=>{ ev.stopPropagation(); rmH(item.id,item.type); });
-    el.addEventListener('click', ()=>opfromh(item));
+    el.querySelector('.hrm').addEventListener('click',ev=>{ev.stopPropagation();rmH(item.id,item.type);});
+    el.addEventListener('click',()=>opfromh(item));
     list.appendChild(el);
   });
 }
-function ago(ts) { const s=(Date.now()-ts)/1000; if(s<60) return'just now'; if(s<3600) return Math.floor(s/60)+'m ago'; if(s<86400) return Math.floor(s/3600)+'h ago'; return Math.floor(s/86400)+'d ago'; }
+function ago(ts){const s=(Date.now()-ts)/1000;if(s<60)return'just now';if(s<3600)return Math.floor(s/60)+'m ago';if(s<86400)return Math.floor(s/3600)+'h ago';return Math.floor(s/86400)+'d ago';}
 
-// CONTINUE WATCHING
-function rcont() {
-  const h=gH().slice(0,8), sec=document.getElementById('contsec'), g=document.getElementById('contg');
-  if (!h.length) { sec.style.display='none'; return; }
-  sec.style.display='block'; g.innerHTML='';
+function rcont(){
+  const h=gH().slice(0,8),sec=document.getElementById('contsec'),g=document.getElementById('contg');
+  if(!h.length){sec.style.display='none';return;}
+  sec.style.display='block';g.innerHTML='';
   h.forEach(item=>{
-    const el=document.createElement('div'); el.className='card';
+    const el=document.createElement('div');el.className='card';
     const im=item.poster?`<div class="pw ok"><img class="poster vis" src="${IW}${item.poster}" alt="" loading="lazy"></div>`:`<div class="pw ok"><div class="pph"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect width="18" height="18" x="3" y="3" rx="2"/></svg></div></div>`;
     el.innerHTML=`${im}<div class="cplay"><svg width="12" height="12" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div><span class="cbadge">${item.type==='tv'?'TV':'Film'}</span><div class="cwb"></div><div class="ci"><div class="ct">${item.title}</div><div class="cs">Continue watching</div></div>`;
     el.addEventListener('click',()=>opfromh(item));
     g.appendChild(el);
   });
 }
-function opfromh(item) { openP({id:item.id,title:item.title,name:item.title,poster_path:item.poster,vote_average:0,overview:''},item.type); }
+function opfromh(item){openP({id:item.id,title:item.title,name:item.title,poster_path:item.poster,vote_average:0,overview:''},item.type);}
 
-// HOME
-async function lhome() {
-  hldd=true; rcont();
-  const hm=document.getElementById('hm'), ht=document.getElementById('ht');
-  skel(hm,10); skel(ht,10);
-  const [mv,tv]=await Promise.all([
-    api(`${API}/trending/movie/week?api_key=${KEY}&language=en-US`),
-    api(`${API}/trending/tv/week?api_key=${KEY}&language=en-US`)
-  ]);
-  rgrid(hm,mv.results||[],'movie'); rgrid(ht,tv.results||[],'tv');
+async function lhome(){
+  hldd=true;rcont();
+  const hm=document.getElementById('hm'),ht=document.getElementById('ht');
+  skel(hm,10);skel(ht,10);
+  const[mv,tv]=await Promise.all([api(`${API}/trending/movie/week?api_key=${KEY}&language=en-US`),api(`${API}/trending/tv/week?api_key=${KEY}&language=en-US`)]);
+  rgrid(hm,mv.results||[],'movie');rgrid(ht,tv.results||[],'tv');
   const picks=(mv.results||[]).filter(m=>m.backdrop_path);
-  if (picks.length) setHero(picks[0|Math.random()*Math.min(picks.length,5)],'movie');
+  if(picks.length)setHero(picks[0|Math.random()*Math.min(picks.length,5)],'movie');
 }
 
-function setHero(item,type) {
-  const hc=document.getElementById('hc'), hbi=document.getElementById('hbi');
-  const title=item.title||item.name||'', rat=item.vote_average?item.vote_average.toFixed(1):'';
-  if (item.backdrop_path) {
-    hbi.style.backgroundImage=`url(${IB}${item.backdrop_path})`;
-    const img=new Image(); img.onload=()=>hbi.classList.add('on'); img.src=`${IB}${item.backdrop_path}`;
-  }
-  hc.innerHTML=`
-    <div class="hbadge"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>${type==='tv'?'Trending TV':'Trending Now'}</div>
-    ${rat?`<div class="hrating"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>${rat}</div>`:''}
-    <h1>${title}</h1>
-    <p>${(item.overview||'').slice(0,160)}${(item.overview||'').length>160?'…':''}</p>
-    <div class="hbtns">
-      <button class="btn btn-p" id="heroplay"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5,3 19,12 5,21"/></svg>Watch Now</button>
-      <button class="btn btn-g" id="herobrowse">Browse ${type==='tv'?'Shows':'Movies'}</button>
-    </div>`;
+function setHero(item,type){
+  const hc=document.getElementById('hc'),hbi=document.getElementById('hbi');
+  const title=item.title||item.name||'',rat=item.vote_average?item.vote_average.toFixed(1):'';
+  if(item.backdrop_path){hbi.style.backgroundImage=`url(${IB}${item.backdrop_path})`;const img=new Image();img.onload=()=>hbi.classList.add('on');img.src=`${IB}${item.backdrop_path}`;}
+  hc.innerHTML=`<div class="hbadge"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>${type==='tv'?'Trending TV':'Trending Now'}</div>${rat?`<div class="hrating"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>${rat}</div>`:''}<h1>${title}</h1><p>${(item.overview||'').slice(0,160)}${(item.overview||'').length>160?'…':''}</p><div class="hbtns"><button class="btn btn-p" id="heroplay"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5,3 19,12 5,21"/></svg>Watch Now</button><button class="btn btn-g" id="herobrowse">Browse ${type==='tv'?'Shows':'Movies'}</button></div>`;
   document.getElementById('heroplay').addEventListener('click',()=>openP(item,type));
   document.getElementById('herobrowse').addEventListener('click',()=>go('browse',type));
 }
 
-// BROWSE
-function lbrowse() {
-  cPage=1; cGenre='';
-  document.getElementById('brh').textContent=cType==='movie'?'Movies':'TV Shows';
-  document.getElementById('ttm').className='ttab'+(cType==='movie'?' on':'');
-  document.getElementById('ttt').className='ttab'+(cType==='tv'?' on':'');
-  rpills(); fbrowse(true);
-}
-function rpills() {
-  const w=document.getElementById('gpills'); w.innerHTML='';
+function lbrowse(){cPage=1;cGenre='';document.getElementById('brh').textContent=cType==='movie'?'Movies':'TV Shows';document.getElementById('ttm').className='ttab'+(cType==='movie'?' on':'');document.getElementById('ttt').className='ttab'+(cType==='tv'?' on':'');rpills();fbrowse(true);}
+function rpills(){
+  const w=document.getElementById('gpills');w.innerHTML='';
   GENRES[cType].forEach(g=>{
-    const p=document.createElement('div');
-    p.className='pill'+(g.id===cGenre?' on':''); p.textContent=g.n;
-    p.addEventListener('click',()=>{
-      cGenre=g.id; cPage=1;
-      document.querySelectorAll('.pill').forEach(x=>x.classList.remove('on'));
-      p.classList.add('on'); fbrowse(true);
-    });
+    const p=document.createElement('div');p.className='pill'+(g.id===cGenre?' on':'');p.textContent=g.n;
+    p.addEventListener('click',()=>{cGenre=g.id;cPage=1;document.querySelectorAll('.pill').forEach(x=>x.classList.remove('on'));p.classList.add('on');fbrowse(true);});
     w.appendChild(p);
   });
 }
-async function fbrowse(reset) {
-  const g=document.getElementById('brgrid'); if(reset) skel(g,12);
-  const ep=cType==='movie'?'discover/movie':'discover/tv', gp=cGenre?`&with_genres=${cGenre}`:'';
+async function fbrowse(reset){
+  const g=document.getElementById('brgrid');if(reset)skel(g,12);
+  const ep=cType==='movie'?'discover/movie':'discover/tv',gp=cGenre?`&with_genres=${cGenre}`:'';
   const d=await api(`${API}/${ep}?api_key=${KEY}&language=en-US&sort_by=popularity.desc&page=${cPage}${gp}&vote_count.gte=20`);
-  if(reset) g.innerHTML='';
+  if(reset)g.innerHTML='';
   (d.results||[]).forEach(i=>g.appendChild(mcard(i,cType)));
   document.getElementById('lmb').style.display=(d.page<d.total_pages)?'inline-flex':'none';
 }
 
-// PLAYER
-function dplayer() { document.getElementById('pif').innerHTML=''; }
-async function openP(item,type) {
-  cItem=item; cMT=type; cS=1; cEp=1; cSrv=parseInt(gS('server','0'));
-  go('player'); addH(item,type); lsrc();
-  const title=item.title||item.name||'', year=(item.release_date||item.first_air_date||'').slice(0,4), rat=item.vote_average?item.vote_average.toFixed(1):'–';
+function dplayer(){document.getElementById('pif').innerHTML='';}
+async function openP(item,type){
+  cItem=item;cMT=type;cS=1;cEp=1;cSrv=parseInt(gS('server','0'));
+  go('player');addH(item,type);lsrc();
+  const title=item.title||item.name||'',year=(item.release_date||item.first_air_date||'').slice(0,4),rat=item.vote_average?item.vote_average.toFixed(1):'–';
   document.getElementById('pt').textContent=title;
   document.getElementById('pm').innerHTML=`<span class="star">★ ${rat}</span><span class="mdot">·</span>${year?`<span>${year}</span><span class="mdot">·</span>`:''}<span>${type==='movie'?'Movie':'TV Series'}</span>`;
   document.getElementById('po').textContent=item.overview||'';
@@ -883,132 +988,87 @@ async function openP(item,type) {
   pa.innerHTML=`<button class="btn btn-g btn-sm"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>Mark watched</button>`;
   pa.querySelector('button').addEventListener('click',()=>rmH(item.id,type));
   [0,1,2,3].forEach(i=>document.getElementById('sb'+i).className='srbtn'+(i===cSrv?' on':''));
-  if (type==='tv') lepsel(item); else document.getElementById('epwrap').innerHTML='';
+  if(type==='tv')lepsel(item);else document.getElementById('epwrap').innerHTML='';
 }
-function lsrc() {
-  const slot=document.getElementById('pif'), ldr=document.getElementById('pl');
-  slot.innerHTML=''; ldr.style.display='flex';
+function lsrc(){
+  const slot=document.getElementById('pif'),ldr=document.getElementById('pl');
+  slot.innerHTML='';ldr.style.display='flex';
   const iframe=document.createElement('iframe');
   iframe.setAttribute('allowfullscreen','');
   iframe.setAttribute('allow','fullscreen; autoplay; encrypted-media; picture-in-picture');
   iframe.setAttribute('referrerpolicy','no-referrer-when-downgrade');
   iframe.style.cssText='width:100%;height:100%;border:none;display:block;opacity:0;transition:opacity .3s;position:absolute;inset:0;z-index:1';
-  const show=()=>{ ldr.style.display='none'; iframe.style.opacity='1'; };
-  iframe.onload=()=>{ show(); try{if(iframe.contentWindow) iframe.contentWindow.open=()=>null;}catch(_){} };
+  const show=()=>{ldr.style.display='none';iframe.style.opacity='1';};
+  iframe.onload=()=>{show();try{if(iframe.contentWindow)iframe.contentWindow.open=()=>null;}catch(_){}};
   setTimeout(show,5000);
   slot.style.cssText='width:100%;height:100%;position:relative';
   slot.appendChild(iframe);
   iframe.src=eurl(cItem,cMT,cSrv,cS,cEp);
 }
 
-// EPISODES
-async function lepsel(item) {
+async function lepsel(item){
   const w=document.getElementById('epwrap');
   w.innerHTML=`<div class="epsec"><p style="color:var(--text3);font-size:.8rem">Loading episodes…</p></div>`;
   const d=await api(`${API}/tv/${item.id}?api_key=${KEY}&language=en-US`);
   const ns=d.number_of_seasons||1;
-  let tabs=''; for(let i=1;i<=ns;i++) tabs+=`<button class="stab${i===1?' on':''}" data-s="${i}">${ns>10?`S${i}`:`Season ${i}`}</button>`;
+  let tabs='';for(let i=1;i<=ns;i++)tabs+=`<button class="stab${i===1?' on':''}" data-s="${i}">${ns>10?`S${i}`:`Season ${i}`}</button>`;
   w.innerHTML=`<div class="epsec"><div class="epsect"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 8h10M9 12h10M9 16h10M4.02 8h.02M4.02 12h.02M4.02 16h.02"/></svg>Episodes</div><div class="stabs" id="stabs">${tabs}</div><div id="eplist"></div></div>`;
-  document.querySelectorAll('.stab').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      const s=parseInt(btn.dataset.s); cS=s; cEp=1;
-      document.querySelectorAll('.stab').forEach(t=>t.classList.remove('on'));
-      btn.classList.add('on'); lsrc(); leps(item.id,s);
-    });
-  });
+  document.querySelectorAll('.stab').forEach(btn=>{btn.addEventListener('click',()=>{const s=parseInt(btn.dataset.s);cS=s;cEp=1;document.querySelectorAll('.stab').forEach(t=>t.classList.remove('on'));btn.classList.add('on');lsrc();leps(item.id,s);});});
   leps(item.id,1);
 }
-async function leps(id,s) {
-  const list=document.getElementById('eplist'); if(!list) return;
+async function leps(id,s){
+  const list=document.getElementById('eplist');if(!list)return;
   list.innerHTML=`<div class="epscroll">${Array(6).fill(0).map(()=>`<div class="skel" style="width:224px;flex-shrink:0"><div class="skel-img" style="aspect-ratio:16/9"></div><div class="skel-b"></div><div class="skel-b2"></div></div>`).join('')}</div>`;
   const d=await api(`${API}/tv/${id}/season/${s}?api_key=${KEY}&language=en-US`);
   const eps=d.episodes||[];
-  if (!eps.length) { list.innerHTML='<p style="color:var(--text3);font-size:.8rem;padding:.5rem 0">No episodes found.</p>'; return; }
-  if (eps.length>30) {
+  if(!eps.length){list.innerHTML='<p style="color:var(--text3);font-size:.8rem;padding:.5rem 0">No episodes found.</p>';return;}
+  if(eps.length>30){
     list.innerHTML=`<div class="epgrid">${eps.map(ep=>`<button class="epbtn${ep.episode_number===cEp?' on':''}" data-ep="${ep.episode_number}">E${ep.episode_number}</button>`).join('')}</div>`;
-    list.querySelectorAll('.epbtn').forEach(btn=>{
-      btn.addEventListener('click',()=>{
-        document.querySelectorAll('.epbtn').forEach(b=>b.classList.remove('on'));
-        btn.classList.add('on'); cEp=parseInt(btn.dataset.ep); lsrc();
-      });
-    });
+    list.querySelectorAll('.epbtn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.epbtn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');cEp=parseInt(btn.dataset.ep);lsrc();});});
     return;
   }
-  const scroll=document.createElement('div'); scroll.className='epscroll';
+  const scroll=document.createElement('div');scroll.className='epscroll';
   eps.forEach(ep=>{
-    const card=document.createElement('div');
-    card.className='epcard'+(ep.episode_number===cEp?' on':'');
+    const card=document.createElement('div');card.className='epcard'+(ep.episode_number===cEp?' on':'');
     const still=ep.still_path?`<img src="${IE}${ep.still_path}" alt="" loading="lazy" onload="this.classList.add('vis')">`:`<div class="epthph"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5,3 19,12 5,21"/></svg></div>`;
     card.innerHTML=`<div class="epthumb">${still}<div class="epplay"><div class="epplayi"><svg width="11" height="11" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div></div></div><div class="epinfo"><div class="epnum">Episode ${ep.episode_number}${ep.runtime?` · ${ep.runtime}m`:''}</div><div class="epname">${ep.name||'Episode '+ep.episode_number}</div><div class="epovr">${ep.overview||'No description available.'}</div></div>`;
-    card.addEventListener('click',()=>{
-      document.querySelectorAll('.epcard').forEach(c=>c.classList.remove('on'));
-      card.classList.add('on'); cEp=ep.episode_number; lsrc();
-    });
+    card.addEventListener('click',()=>{document.querySelectorAll('.epcard').forEach(c=>c.classList.remove('on'));card.classList.add('on');cEp=ep.episode_number;lsrc();});
     scroll.appendChild(card);
   });
-  list.innerHTML=''; list.appendChild(scroll);
-  setTimeout(()=>{ const a=list.querySelector('.epcard.on'); if(a) a.scrollIntoView({behavior:'smooth',block:'nearest',inline:'start'}); },100);
+  list.innerHTML='';list.appendChild(scroll);
+  setTimeout(()=>{const a=list.querySelector('.epcard.on');if(a)a.scrollIntoView({behavior:'smooth',block:'nearest',inline:'start'});},100);
 }
 
-// SEARCH
-function dsearch(v) {
-  clearTimeout(stmr);
-  if (!v.trim()) { document.getElementById('sg').innerHTML=''; document.getElementById('sinf').textContent='Start typing to search…'; return; }
-  stmr=setTimeout(()=>dosearch(v),320);
-}
-async function dosearch(v) {
-  if (!v.trim()) return;
-  document.getElementById('sinf').textContent=`Searching for "${v}"…`;
-  skel(document.getElementById('sg'),8);
-  const d=await api(`${API}/search/multi?api_key=${KEY}&language=en-US&query=${encodeURIComponent(v)}&page=1`);
-  const res=(d.results||[]).filter(r=>r.media_type==='movie'||r.media_type==='tv');
-  document.getElementById('sinf').textContent=res.length?`${res.length} results for "${v}"`:`No results for "${v}"`;
-  const g=document.getElementById('sg'); g.innerHTML='';
-  res.forEach(i=>g.appendChild(mcard(i,i.media_type)));
-}
+function dsearch(v){clearTimeout(stmr);if(!v.trim()){document.getElementById('sg').innerHTML='';document.getElementById('sinf').textContent='Start typing to search…';return;}stmr=setTimeout(()=>dosearch(v),320);}
+async function dosearch(v){if(!v.trim())return;document.getElementById('sinf').textContent=`Searching for "${v}"…`;skel(document.getElementById('sg'),8);const d=await api(`${API}/search/multi?api_key=${KEY}&language=en-US&query=${encodeURIComponent(v)}&page=1`);const res=(d.results||[]).filter(r=>r.media_type==='movie'||r.media_type==='tv');document.getElementById('sinf').textContent=res.length?`${res.length} results for "${v}"`:`No results for "${v}"`;const g=document.getElementById('sg');g.innerHTML='';res.forEach(i=>g.appendChild(mcard(i,i.media_type)));}
 
-// MODAL
-function openM(tab='login') { document.getElementById('amod').classList.add('on'); switchT(tab); }
-function closeM() { document.getElementById('amod').classList.remove('on'); }
-function switchT(t) {
-  document.getElementById('lf').style.display=t==='login'?'block':'none';
-  document.getElementById('rf').style.display=t==='reg'?'block':'none';
-  document.getElementById('mta').className='mtab'+(t==='login'?' on':'');
-  document.getElementById('mtb').className='mtab'+(t==='reg'?' on':'');
-  document.getElementById('lerr').textContent='';
-  document.getElementById('rerr').textContent='';
-}
+function openM(tab='login'){document.getElementById('amod').classList.add('on');switchT(tab);}
+function closeM(){document.getElementById('amod').classList.remove('on');}
+function switchT(t){document.getElementById('lf').style.display=t==='login'?'block':'none';document.getElementById('rf').style.display=t==='reg'?'block':'none';document.getElementById('mta').className='mtab'+(t==='login'?' on':'');document.getElementById('mtb').className='mtab'+(t==='reg'?' on':'');document.getElementById('lerr').textContent='';document.getElementById('rerr').textContent='';}
 
-// SKELETON
-function skel(el,n=12) { el.innerHTML=Array(n).fill(0).map(()=>`<div class="skel"><div class="skel-img"></div><div class="skel-b"></div><div class="skel-b2"></div></div>`).join(''); }
+function skel(el,n=12){el.innerHTML=Array(n).fill(0).map(()=>`<div class="skel"><div class="skel-img"></div><div class="skel-b"></div><div class="skel-b2"></div></div>`).join('');}
 
-// CARD
-function mcard(item,type) {
-  const t=type||item.media_type||'movie', title=item.title||item.name||'Untitled';
-  const year=(item.release_date||item.first_air_date||'').slice(0,4), rat=item.vote_average?item.vote_average.toFixed(1):'–';
+function mcard(item,type){
+  const t=type||item.media_type||'movie',title=item.title||item.name||'Untitled';
+  const year=(item.release_date||item.first_air_date||'').slice(0,4),rat=item.vote_average?item.vote_average.toFixed(1):'–';
   const watched=gH().some(x=>x.id===item.id&&x.type===t);
-  const el=document.createElement('div'); el.className='card';
+  const el=document.createElement('div');el.className='card';
   const play=`<div class="cplay"><svg width="12" height="12" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>`;
   const badge=`<span class="cbadge">${t==='tv'?'TV':'Film'}</span>`;
   const wb=watched?`<div class="cwb"></div>`:'';
   const info=`<div class="ci"><div class="ct">${title}</div><div class="cs"><span class="cstar">★</span> ${rat}${year?` · ${year}`:''}</div></div>`;
-  if (item.poster_path) {
-    el.innerHTML=`<div class="pw" data-src="${IW}${item.poster_path}"><div class="psh"></div><img class="poster" alt="${title.replace(/"/g,"'")}"></div>${play}${badge}${wb}${info}`;
-    iobs.observe(el.querySelector('.pw'));
-  } else {
-    el.innerHTML=`<div class="pw ok"><div class="pph"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect width="18" height="18" x="3" y="3" rx="2"/></svg></div></div>${play}${badge}${wb}${info}`;
-  }
+  if(item.poster_path){el.innerHTML=`<div class="pw" data-src="${IW}${item.poster_path}"><div class="psh"></div><img class="poster" alt="${title.replace(/"/g,"'")}"></div>${play}${badge}${wb}${info}`;iobs.observe(el.querySelector('.pw'));}
+  else{el.innerHTML=`<div class="pw ok"><div class="pph"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect width="18" height="18" x="3" y="3" rx="2"/></svg></div></div>${play}${badge}${wb}${info}`;}
   el.addEventListener('click',()=>openP(item,t));
   return el;
 }
-function rgrid(el,items,type) {
+function rgrid(el,items,type){
   el.innerHTML='';
-  if (!items?.length) { el.innerHTML='<div style="color:var(--text3);padding:3rem 0;text-align:center;grid-column:1/-1;font-size:.88rem">Nothing found</div>'; return; }
+  if(!items?.length){el.innerHTML='<div style="color:var(--text3);padding:3rem 0;text-align:center;grid-column:1/-1;font-size:.88rem">Nothing found</div>';return;}
   items.forEach(i=>el.appendChild(mcard(i,type)));
 }
 
-// BOOT
-rnav(); lhome();
+rnav();lhome();
 </script>
 </body>
 </html>
